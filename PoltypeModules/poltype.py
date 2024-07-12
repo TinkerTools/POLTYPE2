@@ -86,6 +86,7 @@ import random
 import productiondynamics as prod
 import ldatabaseparser
 import lmodifytinkerkey
+import lrestrainedtorsionfinder
 
 @dataclass
 class PolarizableTyper():
@@ -4685,6 +4686,8 @@ class PolarizableTyper():
                 AllChem.EmbedMolecule(m)
             self.indextoatomicsymbol=self.GrabAtomicSymbols(m)
             Chem.SanitizeMol(m)
+            # STEP 8.5
+            self.rotbond2restrainedtorsion = lrestrainedtorsionfinder.findTorsionToBeRestrained(m)
             # STEP 9
             smarts=rdmolfiles.MolToSmarts(m)
             if '.' in smarts:
